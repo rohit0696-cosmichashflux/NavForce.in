@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NavForce Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #0a2a43, #1a4a6c);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Ocean Wave Animation */
+        .ocean {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 220px;
+            z-index: -1;
+        }
+        
+        .wave {
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: 1000px 200px;
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+            opacity: 0.6;
+        }
+        
+        .wave.wave1 {
+            animation: animate-wave 30s linear infinite;
+            z-index: 1000;
+            opacity: 0.5;
+        }
+        
+        .wave.wave2 {
+            animation: animate-wave-2 15s linear infinite;
+            z-index: 999;
+            opacity: 0.4;
+        }
+        
+        .wave.wave3 {
+            animation: animate-wave 25s linear infinite;
+            z-index: 998;
+            opacity: 0.3;
+        }
+        
+        @keyframes animate-wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1000px; }
+        }
+        
+        @keyframes animate-wave-2 {
+            0% { background-position-x: 0; }
+            100% { background-position-x: -1000px; }
+        }
+        
+        /* Header and Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(10, 42, 67, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            height: 50px;
+            width: auto;
+            display: block;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, #03345f, #034144);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: capitalize;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: color 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover {
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.1);
+        }
+        
+        /* Main Content */
+        .main-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .dashboard-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .dashboard-title h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .dashboard-title p {
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Options Container */
+        .options-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .option-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #00f2fe;
+        }
+        
+        .option-card h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .option-card p {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+        
+        /* Video Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: rgba(20, 60, 100, 0.9);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 900px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.5s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #00f2fe;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00f2fe;
+        }
+        
+        .video-description {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+        
+        /* Dashboard Stats */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .stat-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+        
+        .stat-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .main-container {
+                padding: 20px;
+            }
+            
+            .dashboard-title h1 {
+                font-size: 32px;
+            }
+            
+            .options-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .option-card {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                font-size: 16px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ocean Wave Animation -->
+    <div class="ocean">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+    </div>
+    
+    <!-- Header with Navigation -->
+    <header>
+        <div class="logo-container">
+            <img src="Logo.png" alt="NavForce logo" class="logo-image">
+            <div class="logo-text">NavForce</div>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Route Analysis</a>
+            <a href="#">Email Us</a>
+            <a href="contact -.html" id="contact-link">Contact Us</a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="dashboard-title">
+            <h1>Route Analysis and Optimisation</h1>
+            <p>Monitor maritime data, track vessel movements, and analyze ocean patterns in real-time with our advanced analytics platform.</p>
+        </div>
+        
+        <div class="options-container">
+            <!-- Request a Demo Option -->
+            <div class="option-card" id="request-demo">
+                <div class="option-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h2>Request a Demo</h2>
+                <p>Experience our full dashboard capabilities with a personalized demo session. See how our analytics can transform your maritime operations.</p>
+                <button class="btn">Schedule Demo</button>
+            </div>
+            
+            <!-- Watch Video Option -->
+            <div class="option-card" id="watch-video">
+                <div class="option-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h2>Watch Video</h2>
+                <p>Watch our product overview video to see the dashboard in action. Learn about key features and how to get started.</p>
+                <button class="btn">Watch Now</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Video Modal -->
+    <div class="modal-overlay" id="video-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2 class="video-title">Dashboard Overview</h2>
+            <p class="video-description">Explore the powerful features of our Ocean Analytics Dashboard, designed to provide real-time insights into maritime operations, environmental conditions, and vessel tracking.</p>
+            
+            <div class="video-container">
+                <iframe src="for- dashboard.mp4" title="Dashboard Overview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn" id="request-demo-modal">Request a Demo</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>© NavForce</p>
+    </footer>
+    
+    <script>
+        // DOM Elements
+        const watchVideoBtn = document.getElementById('watch-video');
+        const videoModal = document.getElementById('video-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const contactLink = document.getElementById('contact-link');
+        const requestDemoBtn = document.getElementById('request-demo');
+        const requestDemoModalBtn = document.getElementById('request-demo-modal');
+        
+        // Open Video Modal
+        watchVideoBtn.addEventListener('click', () => {
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close Video Modal
+        closeModalBtn.addEventListener('click', () => {
+            videoModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        
+        
+        // Request Demo button actions
+        requestDemoBtn.addEventListener('click', () => {
+            alert('Thank you for your interest! Our team will contact you shortly to schedule a demo.');
+        });
+        
+        requestDemoModalBtn.addEventListener('click', () => {
+            videoModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            alert('Thank you for your interest! Our team will contact you shortly to schedule a demo.');
+        });
+        
+        // Add wave animation enhancements
+        const waves = document.querySelectorAll('.wave');
+        waves.forEach((wave, index) => {
+            wave.style.animationDelay = `${index * 5}s`;
+        });
+    </script>
+</body>
+</html>
